@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .outside-btn{
+      width: 50px;
+      height: 50px;
+      background: #2d7d9a;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .outside-btn:hover{
+      background: #4e91aa;
+    }
+    .inner-btn{
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <div id="outsideBtn" class="outside-btn">
+    <div id="insideBtn" class="inner-btn"></div>
+  </div>
+</body>
+<script>
+  window.onload = function() {
+    var outsideBtn = document.getElementById('outsideBtn');
+    var innerBtn = document.getElementById('insideBtn');
+    var beginAnimation = false;
+    outsideBtn.addEventListener('click', function(e) {
+      if(beginAnimation) {
+        return;
+      }
+      beginAnimation = true;
+      innerBtn.style.left = e.layerX + 'px';
+      innerBtn.style.top = e.layerY + 'px';
+      innerBtn.style.width = '0px';
+      innerBtn.style.height = '0px';
+      innerBtn.style.backgroundColor = '#67a1b6';
+      animate();
+    });
+    function animate() {
+      innerBtn.style.left = Number(innerBtn.style.left.split('px')[0]) - 3 + 'px';
+      innerBtn.style.top = Number(innerBtn.style.top.split('px')[0]) - 3 + 'px';
+      innerBtn.style.width = Number(innerBtn.style.width.split('px')[0]) + 6 + 'px';
+      innerBtn.style.height = Number(innerBtn.style.height.split('px')[0]) + 6 + 'px';
+      if (Number(innerBtn.style.width.split('px')[0]) < 110) {
+        requestAnimationFrame(animate);
+      }else{
+        beginAnimation = false;
+        innerBtn.style.left = '0px';
+        innerBtn.style.top = '0px';
+        innerBtn.style.width = '0px';
+        innerBtn.style.height = '0px';
+        innerBtn.style.backgroundColor = '#67a1b6';
+      }
+    }
+  }
+</script>
+</html>
